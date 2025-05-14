@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title> Add new book </title>
+		<link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+		<link rel="stylesheet" href="{% static 'css/Style.css' %}">
+	</head>
+	<body  class="body-add-book">
+		<!-- /* Header Section */ -->
+		<div id="header"></div>
+		
+		<div class="add-book">
+			<h2> Add new book </h2>
+			<form id="addBookForm">
+				<label>Book name: </label>
+				<input type="text" id="title" required>
+				<label>Author: </label>
+				<input type="text" id="author" required>
+				<label>Category: </label>
+				<input type="text" id="category">
+				<label>Description: </label>
+				<textarea id="description"></textarea>
+				<label for="coverImage">Cover book:</label>
+				<input type="file" id="coverImage" name="coverImage" accept="image/*" required>
+				<button type="submit"> Add book </button>
+			</form>
+        <p id="message"></p>
+		</div> 
+		<script src="{% static 'js/addNewBook.js' %}"></script>
+	</body>
+	<script src="{% static 'js/header.js' %}"></script>
+
+</html>

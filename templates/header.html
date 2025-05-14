@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libré</title>
+    
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="iaBar">
+            <div class="container">
+                <div class="logo">
+                    <a href="{% url 'index' %}"><h1><i class="fa-solid fa-book-open"></i> Libré</h1></a>               
+                </div>                
+                <!-- Search Bar -->
+                <div class="search-container">
+                        <select class="search-dropdown">
+                            <option>All</option>
+                            <option>Books</option>
+                            <option>Authors</option>
+                        </select>
+                        <input type="text" class="search-input" placeholder="Search">
+                        <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                <ul>
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li class="Signup"><a href="{% url 'signup' %}">Sign Up</a></li>
+                        <a href="{% url 'addnewbook' %}"><i class="fa-solid fa-plus" title="Add Book"></i></a>                   
+                </ul>
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'index' %}#Bestselling-books-id">View Books</a></li>
+                    <li><a href="{% url 'my_books' %}">My Books</a></li>
+                    <li>
+                        <div class="browse-dropdown">
+                            <button class="browse-button">Browse <i class="fa-solid fa-angle-down"></i>
+                            </button>
+                            <ul class="browse-menu">
+                                <li><a href="{% url 'borrowbook' %}#trendingk-books">Trending</a></li>
+                                <li><a href="{% url 'borrowbook' %}#kids-Books">Kids</a></li>
+                                <li><a href="{% url 'borrowbook' %}#adventure-books">Adventure</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+</body>
+<script src="{% static 'js/header.js' %}"></script>
+</html>

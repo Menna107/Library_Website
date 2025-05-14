@@ -1,0 +1,238 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libré</title>
+    
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Style.css' %}">
+    <script src="localStorage.js"></script>
+
+</head>
+<body>
+    <!-- /* Header Section */ -->
+    <div id="header"></div>
+
+
+<div class="home-page">
+    <div class="homecontent">
+        <div class="content">
+            <h2>Welcome to Libré</h2>
+            <p>
+                discover thousands of books across various categories, from fiction to science, history to self-development—all in one place, accessible anytime, anywhere!
+            </p>
+            <a href="signup.html" class="get-started-button">Started</a>    
+        </div>
+    </div>
+</div>
+
+    <!-- HOME PAGE -->
+
+    <!-- Best selling Books Section -->
+<div class="Bestselling-books-section">
+    <div class="Bestselling-books-label" id = "Bestselling-books-id">Bestselling Books</div>
+</div>
+
+<div class="carousel">
+    <div class="book">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <img src="{% static 'images/Agatha%20Christie’s%20Murder%20on%20the%20Orient%20Express.jpeg' %}" alt="Book 1">
+            </div>
+            <div class="flip-card-back">
+                <p align = "center">Murder on the Orient Express<br><br align = "center">$3.87</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="book">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <img src="{% static 'images/Sherlock%20Holmes%20(Mike%20Mahle).jpeg' %}" alt="Book 2">
+            </div>
+            <div class="flip-card-back">
+                <p align = "center">Sherlock Holmes Adventures<br><br align = "center">$4.12</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="book">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <img src="{% static 'images/garden%20secret.jpeg' %}" alt="Book 3">
+            </div>
+            <div class="flip-card-back">
+                <p align = "center">Garden Secret<br><br align = "center">$2.46</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="book">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <img src="{% static 'images/and then there were none.jpeg' %}" alt="Book 4">
+            </div>
+            <div class="flip-card-back">
+                <p align="center">and then there were none<br><br align = "center"> $3.00</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="book">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <img src="{% static 'images/AUTUMN%20CHILLS_%20Tales%20of%20Intrigue%20from%20the%20Queen%20of%20Crime.jpeg' %}" alt="Book 4">
+            </div>
+            <div class="flip-card-back">
+                <p align = "center">Autumn Chill<br><br align = "center">$2.59</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="book">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <img src="{% static 'images/Cover%20Reveal_%20The%20Only%20Purple%20House%20in%20Town%20by%20Ann%20Aguirre.jpeg' %}" alt="Book 4">
+            </div>
+            <div class="flip-card-back">
+                <p align = "center">The Purple house in town<br><br align = "center">$5.28</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="book">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <img src="{% static 'images/Fantasy%20Book%20Cover%20Design.jpeg' %}" alt="Book 3">
+            </div>
+            <div class="flip-card-back">
+                <p align = "center">The mid night garden<br><br align = "center">$6.31</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Deals Of The Week Section -->
+<div class="deals-section">
+    <div class="deals-header">
+        <h2>Deals Of The Week</h2>
+        <button class="view-all"><a href="borrow books.html">View All ➝</a></button>
+    </div>
+
+    <div class="deals-container">
+        <div class="deals-banner">
+            <img src="{% static 'images/Beige%20Minimal%20Aesthetic%20Summer%20Deals%20Promotion%20Instagram%20Post%20.png' %}">
+        </div>
+
+        <div class="deals-list">
+            <div class="deal">
+                <img src="{% static 'images/Rich%20Dad%20Poor%20Dad_%20What%20the%20Rich%20Teach%20Their%20Kids%20About%20Money%20That%20the%20Poor%20and%20Middle%20Class%20Do%20Not!.jpeg' %}" alt="Rich Dad Poor Dad">
+                <h4>Rich Dad Poor Dad</h4>
+                <p class="price">$10.03</p>
+            </div>
+
+            <div class="deal">
+                <img src="{% static 'images/Things%20We%20Never%20Got%20Over.jpeg' %}" alt="Things We Never Got Over">
+                <h4>Things We Never Got Over</h4>
+                <p class="price">$20.89</p>
+            </div>
+
+            <div class="deal">
+
+                <img src="{% static 'images/Great%20expectation.jpeg' %}" alt="Great Expectation">
+                <h4>Great Expectation</h4>
+                <p class="price">$36.15</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="book-list-section">
+    <div class="book-list-header">
+        <h2>Recommended Books</h2>
+    </div>
+
+    <div class="carousel-container">
+        <div class="carousel">
+
+            <div class="book">
+                <a href="book-details.html?id=39">
+                <img src="{% static 'images/The%20Hound%20of%20the%20Baskervilles%20by%20Sir%20Arthur%20Conan….jpeg' %}" alt="The Hound Of Baskerville">
+                </a>
+            </div>
+
+            <div class="book">
+                <a href="book-details.html?id=34">
+                    <img src="{% static 'images/WhatsApp Image 2025-03-30 at 3.26.52 PM.jpeg' %}" alt="Sherlock Holmed Adventure">
+                </a>
+            </div>
+
+            <div class="book">
+                <a href="book-details.html?id=41">
+                    <img src="{% static 'images/A%20Tale%20of%20Two%20Cities.jpeg' %}" alt="A Tale of two Cities">
+                </a>
+            </div>
+
+            <div class="book">
+                <a href="book-details.html?id=29">
+                    <img src="{% static 'images/“Oliver%20Twist”%20-%20Movie%20Poster%201.jpeg' %}" alt="Oliver Twist">
+                </a>
+            </div>
+
+            <div class="book">
+                <a href="book-details.html?id=30">
+                    <img src="{% static 'images/44506359-6063-4f8b-9715-e838b3454f1d.jpeg' %}" alt="The Hidden Ways">
+                </a>
+            </div>
+
+            <div class="book">
+                <a href="book-details.html?id=32">
+                    <img src="{% static 'images/The%20Murder%20of%20Roger%20Ackroyd.jpeg' %}" alt="The Murder of Roger Ackroyd">
+                </a>
+            </div>
+
+            <div class="book">
+                <a href="book-details.html?id=42">
+                    <img src="{% static 'images/Fantasy%20Book%20Cover%20Design.jpeg' %}" alt="The Midnight garden">
+                </a>
+            </div>
+
+            <div class="book">
+                <a href="book-details.html?id=43">
+                    <img src="{% static 'images/Man%20of%20Peril%20-%20Thriller%20Book%20Cover%20Design.jpeg' %}" alt="Man of Peril">
+                </a>
+            </div>
+
+            <div class="book">
+                <a href="book-details.html?id=28">
+                    <img src="{% static 'images/7c879a3c-b985-47bb-b6a4-a6e57371c139.jpeg' %}"" alt="Jane Eyre">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="footer-container">
+        <p>&copy; 2025 Libré. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>
+</footer>
+    
+</body>
+<script src="header.js"></script>
+</html>
+

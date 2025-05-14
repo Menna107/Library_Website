@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.title }}</title>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Style.css' %}">
+    <style>
+     div .bookImageSection img  {
+    width: 300px;
+    height: 350px;
+    
+    display: block;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+
+    <div class="bookContainer">
+        <div class="bookImageSection">
+            <img src="{{ book.image.url }} " alt="{{ book.title }} " class=".book-detail-image">
+            <div class="button-group">
+                <button class="readSampleBtn">Read Sample</button>
+               <form method="post" action="{% url 'borrow_book' book.id %}">
+    {% csrf_token %}
+    <button type="submit" class="buyNowBtn">Borrow</button>
+</form>
+            </div>
+        </div>
+
+        <div class="bookDetailsWrapper">
+            <div class="bookDetails">
+                <ul>
+                    <li><span class="label">Title:</span> <span id="bookTitle">{{ book.title }}</span></li>
+                    <li><span class="label">Author:</span> <span id="bookAuthor">{{ book.author }}</span></li>
+                    <li><span class="label">Category:</span> <span id="bookCategory">{{ book.category }}</span></li>
+                </ul>
+
+                <div class="bookDescription">
+                    <h3 class="descriptionHeading">Description:</h3>
+                    <p class="bookDescriptionText">{{ book.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Files -->
+    <script src="{% static 'js/book-details.js' %}"></script>
+    
+</body>
+</html>

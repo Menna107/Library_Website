@@ -18,7 +18,8 @@
 </head>
 
 <body>
-    <div id="header"></div>
+ <!-- /* Header Section */ -->
+    {% include "header.html" %}
 
     <div class="bookContainer">
         <div class="bookImageSection">
@@ -67,6 +68,6 @@
     
     
 </body>
-<script src="book-details.js"></script>
-<script src="header.js"></script>
+<script src="{% static 'book-details.js' %}"></script>
+<script src="{% static 'js/header.js' %}"></script>
 </html>

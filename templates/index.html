@@ -15,7 +15,7 @@
 </head>
 <body>
     <!-- /* Header Section */ -->
-    <div id="header"></div>
+     {% include "header.html" %}
 
 
 <div class="home-page">
@@ -25,7 +25,7 @@
             <p>
                 discover thousands of books across various categories, from fiction to science, history to self-development—all in one place, accessible anytime, anywhere!
             </p>
-            <a href="signup.html" class="get-started-button">Started</a>    
+            <a href="{% url 'signup' %}" class="get-started-button">Started</a>    
         </div>
     </div>
 </div>
@@ -122,7 +122,7 @@
 <div class="deals-section">
     <div class="deals-header">
         <h2>Deals Of The Week</h2>
-        <button class="view-all"><a href="borrow books.html">View All ➝</a></button>
+        <button class="view-all"><a href="{% url 'borrowbook' %}">View All ➝</a></button>
     </div>
 
     <div class="deals-container">

@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="signUp" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libré | Login</title>
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
@@ -13,7 +13,8 @@
 
 </head>
 <body>
-    <div id="header"></div>
+    <!-- /* Header Section */ -->
+     {% include "header.html" %}
 
     
 
@@ -23,6 +24,7 @@
             <div class="container">
                 <h2>Login now</h2>
                 <form method="post" id = "loginForm">
+                    {% csrf_token %}
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email" required>
 
@@ -34,12 +36,19 @@
 
                     <button type="submit" class="submitButton"><b>Login</b></button>
                 </form>
+                 {% if messages %}
+                {% for message in messages %}
+                    <p style="color: red;">{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+                 
             </div>
             <div class="login">
                 <h5>Don't have an account?</h5>
-                <a href="signUp.html">sign up here</a>
+                <a href="{%url 'signup'%}">sign up here</a>
             </div>
         </div>
+       
 
         <!-- Right Section: -->
         <div class="right-section">
@@ -48,8 +57,7 @@
             <p>Enter your credentials to sign in and start reading!</p>
         </div>
     </div>
-    <script src="login.js"></script>
+   <script src="{% static 'js/login.js' %}"></script>
 </body>
-<script src="header.js"></script>
-
+<script src="{% static 'js/header.js' %}"></script>
 </html>

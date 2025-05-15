@@ -1,0 +1,116 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libré</title>
+    
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Style.css' %}">
+   <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin: 40px 0 20px;
+        color: #333;
+    }
+
+    .books-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .book-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 15px;
+        width: 250px;
+        transition: transform 0.3s ease;
+        text-align: center;
+    }
+
+    .book-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .book-card img {
+        border-radius: 5px;
+        margin-bottom: 10px;
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .book-card h3 {
+        font-size: 18px;
+        color: #222;
+        margin-bottom: 10px;
+    }
+
+    .book-card p {
+        font-size: 14px;
+        color: #666;
+        margin: 4px 0;
+    }
+
+    @media (max-width: 768px) {
+        .book-card {
+            width: 45%;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .book-card {
+            width: 100%;
+        }
+    }
+
+</style>
+
+</head>
+
+<body>
+     <!-- /* Header Section */ -->
+     {% include "header.html" %}
+
+
+    <div style="margin-top: 170px;">
+    <h1>My Borrowed Books</h1>
+    {% if borrowed_books %}
+        <div class="books-list">
+            {% for borrow in borrowed_books %}
+                <div class="book-card">
+                    <img src="{{ borrow.book.image.url }}" alt="{{ borrow.book.title }}" width="150">
+                    <h3>{{ borrow.book.title }}</h3>
+                    <p><strong>Author:</strong> {{ borrow.book.author }}</p>
+                    <p><strong>Category:</strong> {{ borrow.book.category }}</p>
+                    <p><strong>Borrowed at:</strong> {{ borrow.borrowed_at }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You haven't borrowed any books yet.</p>
+    {% endif %}
+    </div>
+
+</body>
+<script src="{% static 'js/header.js' %}"></script>
+<script src="{% static 'js/My-books.js' %}"></script>
+</html>
+

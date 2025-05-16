@@ -352,7 +352,7 @@ header .browse-dropdown:hover .browse-menu {
 }
 @media (max-width: 768px) {
     .home-page{
-        background-image: url('../photos of the project/toa-heftiba-ip9R11FMbV8-unsplash.jpg');
+        background-image: url('../images/toa-heftiba-ip9R11FMbV8-unsplash.jpg');
         
     }
     .home-page::before{

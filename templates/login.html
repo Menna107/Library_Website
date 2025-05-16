@@ -8,56 +8,89 @@
     <title>Libré | Login</title>
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-	<link rel="stylesheet" href="{% static 'css/Style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Style.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* Form Error Styling */
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
 
+        .errorlist {
+            color: #dc3545;
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .errorlist li {
+            list-style-type: none;
+            font-size: 0.9em;
+        }
+        
+        .password-wrapper {
+            position: relative;
+        }
+        
+        .password-wrapper i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <!-- /* Header Section */ -->
-     {% include "header.html" %}
-
-    
+    {% include "header.html" %}
 
     <div class="wrapper">
-        <!-- Left Section: Login Form -->
         <div class="left-section">
             <div class="container">
                 <h2>Login now</h2>
-                <form method="post" id = "loginForm">
+                <form method="post" id="loginForm">
                     {% csrf_token %}
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" required>
-
-                    <label for="password">Password</label>
+                    
+                    <label for="id_username">Email</label>
+                    {{ form.username }}
+                    
+                    <label for="id_password">Password</label>
                     <div class="password-wrapper">
-                        <input type="password" name="password" id="password" required>
+                        {{ form.password }}
                         <i class="far fa-eye" id="togglePassword"></i>
                     </div>
 
                     <button type="submit" class="submitButton"><b>Login</b></button>
                 </form>
-                 {% if messages %}
-                {% for message in messages %}
-                    <p style="color: red;">{{ message }}</p>
-                {% endfor %}
+
+                 {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
                 {% endif %}
-                 
+                
             </div>
             <div class="login">
                 <h5>Don't have an account?</h5>
-                <a href="{%url 'signup'%}">sign up here</a>
+                <a href="{% url 'signup' %}">sign up here</a>
             </div>
         </div>
        
-
-        <!-- Right Section: -->
         <div class="right-section">
             <h2>Welcome Back!</h2>
             <p>Log in to Libré and continue your reading journey.</p>
             <p>Enter your credentials to sign in and start reading!</p>
         </div>
     </div>
-   <script src="{% static 'js/login.js' %}"></script>
+   
+    <script src="{% static 'js/login.js' %}"></script>
+    <script src="{% static 'js/header.js' %}"></script>
 </body>
-<script src="{% static 'js/header.js' %}"></script>
 </html>

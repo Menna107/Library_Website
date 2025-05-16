@@ -12,17 +12,17 @@
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/Style.css' %}">
    <style>
-    body {
+    /* body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #f4f4f4;
         margin: 0;
         padding: 0;
-    }
+    } */
 
     h1 {
         text-align: center;
-        margin: 40px 0 20px;
-        color: #333;
+        /* margin: 40px 0 20px;
+        color: #333; */
     }
 
     .books-list {
@@ -91,7 +91,7 @@
 
 
     <div style="margin-top: 170px;">
-    <h1>My Borrowed Books</h1>
+    <h1 style="color: #1290A4;">My Borrowed Books</h1>
     {% if borrowed_books %}
         <div class="books-list">
             {% for borrow in borrowed_books %}

@@ -1,15 +1,83 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libré</title>
-    
+
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/Style.css' %}">
+
+    <style>
+        .account-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            cursor: pointer;
+            color: white;
+            font-weight: 600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            }
+
+        .account-menu:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .account-menu i,
+        .account-menu svg {
+        margin-right: 6px;
+        fill: white;
+        width: 22px;
+        height: 22px;
+        }
+
+        .profile-hover-info {
+        display: none;
+        position: absolute;
+        top: 110%;
+        right: 0;
+        background-color: #ffffff;
+        color: #333333;
+        padding: 15px 20px;
+        border-radius: 8px;
+        width: 220px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        z-index: 150;
+        font-size: 14px;
+        line-height: 1.4;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        user-select: none;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        transform: translateY(-10px);
+        }
+
+        .account-menu:hover .profile-hover-info {
+        display: block;
+        pointer-events: auto;
+        opacity: 1;
+        transform: translateY(0);
+        }
+
+        .profile-hover-info p {
+        margin: 6px 0;
+        }
+
+        .profile-hover-info strong {
+        font-size: 16px;
+        color: #222222;
+        }
+
+
+    </style>
+
 </head>
 <body>
     <header>
@@ -18,23 +86,51 @@
                 <div class="logo">
                     <a href="{% url 'index' %}"><h1><i class="fa-solid fa-book-open"></i> Libré</h1></a>               
                 </div>                
+
                 <!-- Search Bar -->
                 <div class="search-container">
-                        <select class="search-dropdown">
-                            <option>All</option>
-                            <option>Books</option>
-                            <option>Authors</option>
-                        </select>
-                        <input type="text" class="search-input" placeholder="Search">
-                        <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <select class="search-dropdown">
+                        <option>All</option>
+                        <option>Books</option>
+                        <option>Authors</option>
+                    </select>
+                    <input type="text" class="search-input" placeholder="Search">
+                    <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
+
+                <!-- User Nav -->
                 <ul>
+                    {% if user.is_authenticated %}
+                    <li class="account-menu">
+                            <i class="fas fa-user"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="20" viewBox="0 0 24 24" width="20">
+                                <path d="M12 12c2.67 0 8 1.34 8 4v2H4v-2c0-2.66 5.33-4 8-4zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+                            </svg>
+                        </a>
+                        <div class="profile-hover-info">
+                            <p><strong>{{ user.username }}</strong></p>
+                            <p>Email: {{ user.email }}</p>
+                            <p>Member since: {{ user.date_joined|date:"F j, Y" }}</p>
+                        </div>
+                    </li>
+                    
+                    <!-- Logout -->
+                        <li>
+                            <a href="{% url 'logout' %}" title="Logout" onclick="return confirm('Are you sure you want to log out?');">Logout</a>
+                       </li>
+                    {% else %}
                         <li><a href="{% url 'login' %}">Login</a></li>
                         <li class="Signup"><a href="{% url 'signup' %}">Sign Up</a></li>
-                        <a href="{% url 'addnewbook' %}"><i class="fa-solid fa-plus" title="Add Book"></i></a>                   
+                    {% endif %}
+                    <!--  This icon is shown only to Admin (controlled via JS) --> 
+                    <!-- <li>
+                        <i class="fas fa-plus" style="display:none;" title="Add Book"></i>
+                    </li> -->
                 </ul>
             </div>
         </div>
+
+        <!-- Navigation -->
         <nav>
             <div class="container">
                 <ul>
@@ -43,8 +139,7 @@
                     <li><a href="{% url 'my_books' %}">My Books</a></li>
                     <li>
                         <div class="browse-dropdown">
-                            <button class="browse-button">Browse <i class="fa-solid fa-angle-down"></i>
-                            </button>
+                            <button class="browse-button">Browse <i class="fa-solid fa-angle-down"></i></button>
                             <ul class="browse-menu">
                                 <li><a href="{% url 'borrowbook' %}#trendingk-books">Trending</a></li>
                                 <li><a href="{% url 'borrowbook' %}#kids-Books">Kids</a></li>
@@ -56,7 +151,6 @@
             </div>
         </nav>
     </header>
-
+    <script src="{% static 'js/header.js' %}"></script>
 </body>
-<script src="{% static 'js/header.js' %}"></script>
 </html>

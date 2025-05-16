@@ -15,7 +15,7 @@ urlpatterns = [
      path('borrow/<int:book_id>/', views.borrow_book, name='borrow_book'),
     path('my-books/', views.my_books, name='my_books'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    
+    path('delete-borrow/<int:borrow_id>/', views.delete_borrow, name='delete_borrow'),
    
     
 ]

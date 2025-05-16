@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     localStorage.setItem("searchResults", JSON.stringify(results));
                     searchInput.value = "";
-                    window.location.href = "book-details.html?id=" + results[0].id;
+                    window.location.href = "/book-details/" + results[0].id + "/";
                 });
             } else {
                 console.warn("Search elements not found in header.");

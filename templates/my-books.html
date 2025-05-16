@@ -96,12 +96,25 @@
         <div class="books-list">
             {% for borrow in borrowed_books %}
                 <div class="book-card">
-                    <img src="{{ borrow.book.image.url }}" alt="{{ borrow.book.title }}" width="150">
-                    <h3>{{ borrow.book.title }}</h3>
-                    <p><strong>Author:</strong> {{ borrow.book.author }}</p>
-                    <p><strong>Category:</strong> {{ borrow.book.category }}</p>
-                    <p><strong>Borrowed at:</strong> {{ borrow.borrowed_at }}</p>
-                </div>
+    <img src="{{ borrow.book.image.url }}" alt="{{ borrow.book.title }}" width="150">
+    <h3>{{ borrow.book.title }}</h3>
+    <p><strong>Author:</strong> {{ borrow.book.author }}</p>
+    <p><strong>Category:</strong> {{ borrow.book.category }}</p>
+    <p><strong>Borrowed at:</strong> {{ borrow.borrowed_at }}</p>
+
+    <form action="{% url 'delete_borrow' borrow.id %}" method="POST" style="margin-top: 10px;">
+        {% csrf_token %}
+        <button type="submit" style="
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        ">Delete</button>
+    </form>
+</div>
+
             {% endfor %}
         </div>
     {% else %}
@@ -113,4 +126,3 @@
 <script src="{% static 'js/header.js' %}"></script>
 <script src="{% static 'js/My-books.js' %}"></script>
 </html>
-

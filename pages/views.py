@@ -76,3 +76,11 @@ def borrow_book(request, book_id):
 def my_books(request):
     borrowed_books = Borrow.objects.filter(user=request.user).select_related('book')
     return render(request, 'my-books.html', {'borrowed_books': borrowed_books})
+
+
+@login_required
+
+def delete_borrow(request, borrow_id):
+    borrow = get_object_or_404(Borrow, id=borrow_id, user=request.user)
+    borrow.delete()
+    return redirect('my_books')

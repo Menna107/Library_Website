@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import get_user_model
+from .models import Book
 
 User = get_user_model()
 
@@ -82,3 +83,11 @@ class LoginForm(AuthenticationForm):
             'id': 'password'  
         })
     )
+
+    
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'author', 'category', 'description', 'image']
+

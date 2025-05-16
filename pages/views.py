@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, LoginForm, EmailAuthenticationForm
 from .models import Book, Category, Borrow
+from .forms import BookForm
+
 
 def header(request):
     return render(request, 'header.html')
@@ -12,18 +14,49 @@ def header(request):
 def index(request):
     return render(request, 'index.html')
 
+@login_required
 def addnewbook(request):
+    if not request.session.get('is_admin'):
+        return redirect('index')  
     return render(request, 'add_new_book.html')
+
 
 def user_login(request):
     if request.method == 'POST':
         form = EmailAuthenticationForm(request, data=request.POST)
+        email = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Special case: admin login
+        if email == 'admin@gmail.com' and password == 'admin123':
+            # Check if admin user exists, otherwise create
+            user, created = User.objects.get_or_create(email='admin@gmail.com', defaults={
+                'username': 'admin',
+            })
+            if created:
+                user.set_password('admin123')
+                user.is_staff = True
+                user.is_superuser = True
+                user.save()
+
+            # Authenticate and login
+            user = authenticate(request, username='admin', password='admin123')
+            if user:
+                auth_login(request, user)
+                request.session['is_admin'] = True
+                return redirect('index')
+
+        # Normal login
         if form.is_valid():
-            auth_login(request, form.get_user())
+            user = form.get_user()
+            auth_login(request, user)
+            request.session['is_admin'] = (user.email == 'admin@gmail.com')
             return redirect('index')
     else:
         form = EmailAuthenticationForm()
+
     return render(request, 'login.html', {'form': form})
+
 
 def signup(request):
     if request.method == 'POST':
@@ -110,3 +143,37 @@ def search_books(request):
 
     # لو لا، نعرض صفحة نتائج البحث
     return render(request, 'search_results.html', {'results': results, 'query': query})
+
+@login_required
+def delete_book(request, book_id):
+    if not request.session.get('is_admin'):
+        messages.error(request, "You are not authorized to delete books.")
+        return redirect('bookdetails', book_id=book_id)
+
+    book = get_object_or_404(Book, id=book_id)
+
+    if request.method == 'POST':
+        book.delete()
+        messages.success(request, "Book deleted successfully.")
+        return redirect('borrowbook')  # or wherever you list books
+
+    return redirect('bookdetails', book_id=book_id)
+
+@login_required
+def edit_book(request, book_id):
+    if not request.session.get('is_admin'):
+        messages.error(request, "You are not authorized to edit books.")
+        return redirect('bookdetails', book_id=book_id)
+
+    book = get_object_or_404(Book, id=book_id)
+
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Book updated successfully.")
+            return redirect('bookdetails', book_id=book_id)
+    else:
+        form = BookForm(instance=book)
+
+    return render(request, 'edit_book.html', {'form': form, 'book': book})

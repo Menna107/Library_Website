@@ -1,61 +1,63 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+from .forms import SignUpForm, LoginForm, EmailAuthenticationForm
+from .models import Book, Category, Borrow
 
-
-def header(request):
-    return render(request, 'header.html')
 def header(request):
     return render(request, 'header.html')
 
 def index(request):
     return render(request, 'index.html')
 
-def bookdetails(request):
-    return render(request, 'book-details.html')
-
 def addnewbook(request):
-    return render(request, 'Add_New_Book.html')
+    return render(request, 'add_new_book.html')
 
-
-
-def login(request):
-    return render(request, 'login.html')    
+def user_login(request):
+    if request.method == 'POST':
+        form = EmailAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user())
+            return redirect('index')
+    else:
+        form = EmailAuthenticationForm()
+    return render(request, 'login.html', {'form': form})
 
 def signup(request):
-    return render(request, 'signup.html')
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Sign up successful. You can now log in.")
+            return redirect('login')
+    else:
+        form = SignUpForm()
+    return render(request, 'signUp.html', {'form': form})
+from django.contrib.auth import logout  # add this import at top
 
-def murederbook(request):
-    return render(request , 'Murder_on_the_Orient_Express.html')
+
+@login_required
+def user_logout(request):
+    logout(request)  # properly call logout
+    messages.success(request, "You have been logged out.")
+    return redirect('index')  # redirect after logout
 
 
-def mybooks (request) :
-    return render(request , 'My-books.html')
-
-from django.shortcuts import render, get_object_or_404
-from .models import * 
+def murderbook(request):
+    return render(request, 'Murder_on_the_Orient_Express.html')
 
 def bookdetails(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     return render(request, 'book-details.html', {'book': book})
 
 def borrowbook(request):
-    
-    context={
+    context = {
         'category': Category.objects.all(),
         'books': Book.objects.all(),
     }
-    return render(request, 'borrow books.html',context)
-
-
-
-
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Book, Borrow
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+    return render(request, 'borrow_books.html', context)
 
 @login_required
 def borrow_book(request, book_id):

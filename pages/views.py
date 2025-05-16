@@ -83,4 +83,4 @@ def my_books(request):
 def delete_borrow(request, borrow_id):
     borrow = get_object_or_404(Borrow, id=borrow_id, user=request.user)
     borrow.delete()
-    return redirect('my_books')
+    return redirect('my_books') 

@@ -35,12 +35,28 @@
         <div class="bookImageSection">
             <img src="{{ book.image.url }} " alt="{{ book.title }} " class=".book-detail-image">
             <div class="button-group">
-                <button class="readSampleBtn">Read Sample</button>
-               <form method="post" action="{% url 'borrow_book' book.id %}">
-    {% csrf_token %}
-    <button type="submit" class="buyNowBtn">Borrow</button>
-</form>
+                <!-- Borrow button -->
+                <form method="post" action="{% url 'borrow_book' book.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="buyNowBtn">Borrow</button>  
+                </form>
+
+                <!-- Edit button for admin only -->
+                {% if request.session.is_admin %}
+                    <a href="{% url 'edit_book' book.id %}" class="readSampleBtn">Edit Book</a>
+                {% endif %}
+
+                <!-- Delete button for admin only -->
+                {% if request.session.is_admin %}
+                    <form method="post" action="{% url 'delete_book' book.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="deleteBtn" style="background-color: #ff4444; color: white; padding: 10px; border: none; border-radius: 5px; margin-top: 10px;">
+                            Delete Book
+                        </button>
+                    </form>
+                {% endif %}
             </div>
+
         </div>
 
         <div class="bookDetailsWrapper">
@@ -59,8 +75,6 @@
         </div>
     </div>
 
-    <!-- JS Files -->
-    <script src="{% static 'js/book-details.js' %}"></script>
     
 </body>
 </html>

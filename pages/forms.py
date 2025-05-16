@@ -66,7 +66,7 @@ class SignUpForm(UserCreationForm):
             'id': 'confirmPassword'
         })
 
-# pages/forms.py
+
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
         widget=forms.TextInput(attrs={
@@ -79,6 +79,6 @@ class LoginForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
             'placeholder': 'Password',
-            'id': 'password'
+            'id': 'password'  
         })
     )

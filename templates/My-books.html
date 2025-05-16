@@ -84,51 +84,10 @@
 </style>
 
 </head>
+
 <body>
-    <header>
-        <div class="iaBar">
-            <div class="container">
-                <div class="logo">
-                    <a href="{% url 'index' %}"><h1><i class="fa-solid fa-book-open"></i> Libré</h1></a>               
-                </div>                
-                <!-- Search Bar -->
-                <div class="search-container">
-                        <select class="search-dropdown">
-                            <option>All</option>
-                            <option>Books</option>
-                            <option>Authors</option>
-                        </select>
-                        <input type="text" class="search-input" placeholder="Search">
-                        <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-                <ul>
-                        <li><a href="{% url 'login' %}">Login</a></li>
-                        <li class="Signup"><a href="{% url 'signup' %}">Sign Up</a></li>
-                        <a href="{% url 'addnewbook' %}"><i class="fa-solid fa-plus" title="Add Book"></i></a>                   
-                </ul>
-            </div>
-        </div>
-        <nav>
-            <div class="container">
-                <ul>
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'index' %}#Bestselling-books-id">View Books</a></li>
-                    <li><a href="{% url 'my_books' %}">My Books</a></li>
-                    <li>
-                        <div class="browse-dropdown">
-                            <button class="browse-button">Browse <i class="fa-solid fa-angle-down"></i>
-                            </button>
-                            <ul class="browse-menu">
-                                <li><a href="{% url 'borrowbook' %}#trendingk-books">Trending</a></li>
-                                <li><a href="{% url 'borrowbook' %}#kids-Books">Kids</a></li>
-                                <li><a href="{% url 'borrowbook' %}#adventure-books">Adventure</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+     <!-- /* Header Section */ -->
+     {% include "header.html" %}
 
 
     <div style="margin-top: 170px;">
@@ -137,12 +96,25 @@
         <div class="books-list">
             {% for borrow in borrowed_books %}
                 <div class="book-card">
-                    <img src="{{ borrow.book.image.url }}" alt="{{ borrow.book.title }}" width="150">
-                    <h3>{{ borrow.book.title }}</h3>
-                    <p><strong>Author:</strong> {{ borrow.book.author }}</p>
-                    <p><strong>Category:</strong> {{ borrow.book.category }}</p>
-                    <p><strong>Borrowed at:</strong> {{ borrow.borrowed_at }}</p>
-                </div>
+    <img src="{{ borrow.book.image.url }}" alt="{{ borrow.book.title }}" width="150">
+    <h3>{{ borrow.book.title }}</h3>
+    <p><strong>Author:</strong> {{ borrow.book.author }}</p>
+    <p><strong>Category:</strong> {{ borrow.book.category }}</p>
+    <p><strong>Borrowed at:</strong> {{ borrow.borrowed_at }}</p>
+
+    <form action="{% url 'delete_borrow' borrow.id %}" method="POST" style="margin-top: 10px;">
+        {% csrf_token %}
+        <button type="submit" style="
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        ">Delete</button>
+    </form>
+</div>
+
             {% endfor %}
         </div>
     {% else %}

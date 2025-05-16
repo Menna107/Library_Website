@@ -36,10 +36,16 @@
             <img src="{{ book.image.url }} " alt="{{ book.title }} " class=".book-detail-image">
             <div class="button-group">
                 <button class="readSampleBtn">Read Sample</button>
-               <form method="post" action="{% url 'borrow_book' book.id %}">
-    {% csrf_token %}
-    <button type="submit" class="buyNowBtn">Borrow</button>
-</form>
+              <form method="post" action="{% url 'borrow_book' book.id %}">
+                {% csrf_token %}
+                {% if book.status == 'available' %}
+                <button type="submit" class="buyNowBtn">Borrow</button>
+                {% else %}
+                <button type="button" class="buyNowBtn" disabled style="background-color: gray; cursor: not-allowed;">
+                 Unavailable
+                </button>
+                {% endif %}
+            </form>
             </div>
         </div>
 

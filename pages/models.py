@@ -6,11 +6,16 @@ class Category(models.Model):
         return self.name
     
 class Book(models.Model):
+    status_book=[
+        ('available', 'available'),
+        ('unavailable', 'unavailable')
+    ]
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     description = models.TextField()
     image = models.ImageField(upload_to='book_covers/', default='book_covers/default.jpg')
+    status= models.CharField(max_length=50,choices =status_book)
 
     def __str__(self):
         return self.title

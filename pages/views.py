@@ -83,3 +83,30 @@ def delete_borrow(request, borrow_id):
     borrow.delete()
     return redirect('my_books')
     return redirect('my_books') 
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Book  # عدل حسب اسم الموديل عندك
+
+def search_books(request):
+    query = request.GET.get('q', '').strip()
+    category = request.GET.get('category', 'all')
+
+    if query == '':
+        return render(request, 'search_results.html', {'error': 'Please enter a search term.'})
+
+    if category == 'books':
+        results = Book.objects.filter(title__icontains=query)
+    elif category == 'authors':
+        results = Book.objects.filter(author__icontains=query)
+    else:
+        results = Book.objects.filter(title__icontains=query) | Book.objects.filter(author__icontains=query)
+
+    # إذا وجدنا كتاب واحد فقط نعيد التوجيه لصفحة تفاصيله
+    if results.count() == 1:
+        book = results.first()
+        return redirect('bookdetails', book_id=book.id)
+ # تأكد من اسم الـ URL واسم الباراميتر
+
+    # لو لا، نعرض صفحة نتائج البحث
+    return render(request, 'search_results.html', {'results': results, 'query': query})

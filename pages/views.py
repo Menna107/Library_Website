@@ -14,11 +14,56 @@ def header(request):
 def index(request):
     return render(request, 'index.html')
 
+# @login_required
+# def addnewbook(request):
+#     # if not request.session.get('is_admin'):
+#     #     return redirect('index')  
+#     return render(request, 'add_new_book.html')
+
+from .forms import BookForm
+from .models import Book, Category
+
 @login_required
 def addnewbook(request):
-    if not request.session.get('is_admin'):
-        return redirect('index')  
-    return render(request, 'add_new_book.html')
+    books = Book.objects.all().order_by('-id')
+
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        custom_category = request.POST.get('customCategory', '').strip()
+        category_id = request.POST.get('category')
+
+        try:
+            # Handle category creation/selection
+            if custom_category:
+                # Create new category if it doesn't exist
+                category_obj, created = Category.objects.get_or_create(name=custom_category)
+            elif category_id and category_id != 'other':
+                try:
+                    category_obj = Category.objects.get(id=category_id)
+                except Category.DoesNotExist:
+                    messages.error(request, 'Selected category does not exist.')
+                    return render(request, 'add_new_book.html', {'form': form, 'books': books})
+            else:
+                messages.error(request, 'Please select a category or enter a custom one.')
+                return render(request, 'add_new_book.html', {'form': form, 'books': books})
+
+            if form.is_valid():
+                book = form.save(commit=False)
+                book.category = category_obj
+                book.save()
+                messages.success(request, 'Book added successfully.')
+                return redirect('addnewbook')
+            else:
+                messages.error(request, 'Please correct the errors below.')
+        except Exception as e:
+            messages.error(request, f'An error occurred while adding the book: {str(e)}')
+    else:
+        form = BookForm()
+
+    return render(request, 'add_new_book.html', {
+        'form': form,
+        'books': books,
+    })
 
 
 def user_login(request):
@@ -86,8 +131,10 @@ def bookdetails(request, book_id):
     return render(request, 'book-details.html', {'book': book})
 
 def borrowbook(request):
+    # Get only categories that have books
+    categories_with_books = Category.objects.filter(book__isnull=False).distinct()
     context = {
-        'category': Category.objects.all(),
+        'category': categories_with_books,
         'books': Book.objects.all(),
     }
     return render(request, 'borrow_books.html', context)

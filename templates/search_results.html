@@ -2,7 +2,22 @@
 <style>
     body{
         margin-top: 150px;
+        
     }
+    ul li a{
+        color: black;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 10px;
+        margin-bottom: 20px;
+        transition: 0.3s ease-in-out;
+
+    }
+    ul li a:hover{
+        color: #1290A4;
+    }
+
 </style>
 {% if error %}
     <p>{{ error }}</p>
@@ -12,7 +27,7 @@
     {% if results %}
         <ul>
             {% for book in results %}
-                <li><a href="{% url 'bookdetails' book.id %}">{{ book.title }} by {{ book.author }}</a></li>
+                <li><a href="{% url 'bookdetails' book.id %}">Title: </Title>{{ book.title }} by {{ book.author }}</a></li>
             {% endfor %}
         </ul>
     {% else %}

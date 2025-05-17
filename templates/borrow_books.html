@@ -28,27 +28,27 @@
         </div>
     </div>
    {% for cat in category %}
-  <div class="carousel-container">
-    <p id="category-title" class="cat{{ cat.id }}">{{ cat.name }}</p> 
-    <button class="arrow left" onclick="scrollleft(this)">&#10094;</button>
+    <div class="carousel-container" id="category-{{ cat.id }}">
+        <p id="category-title" class="cat{{ cat.id }}">{{ cat.name }}</p> 
+        <button class="arrow left" onclick="scrollleft(this)">&#10094;</button>
 
-    <div class="part3" id="carousel{{ cat.id }}" style="display: flex; flex-direction: row; width: 100%;">
-      {% for book in books %}
-        {% if book.category.id == cat.id %}
-          <div style="padding: 20px;" class="bookhide book{{ book.category.id }}">
-            <img src="{{ book.image.url }}">
-            <center>
-              <a href="{% url 'bookdetails' book.id %}">
-                <button>Details</button>
-              </a>
-            </center>
-          </div>
-        {% endif %}
-      {% endfor %}
+        <div class="part3" id="carousel{{ cat.id }}" style="display: flex; flex-direction: row; width: 100%;">
+            {% for book in books %}
+                {% if book.category.id == cat.id %}
+                    <div style="padding: 20px;" class="bookhide book{{ book.category.id }}">
+                        <img src="{{ book.image.url }}" alt="{{ book.title }}">
+                        <center>
+                            <a href="{% url 'bookdetails' book.id %}">
+                                <button>Details</button>
+                            </a>
+                        </center>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <button class="arrow right" onclick="scrollRight(this)">&#10095;</button>
     </div>
-
-    <button class="arrow right" onclick="scrollRight(this)">&#10095;</button>
-  </div>
 {% endfor %}
 
 

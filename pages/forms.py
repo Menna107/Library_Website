@@ -152,7 +152,13 @@ class BookForm(forms.ModelForm):
         title = self.cleaned_data.get('title')
         if len(title) < 2:
             raise forms.ValidationError("Title must be at least 2 characters long")
-        if Book.objects.filter(title__iexact=title).exists():
+        
+        # Check for duplicate titles, excluding the current instance if editing
+        existing_books = Book.objects.filter(title__iexact=title)
+        if self.instance and self.instance.pk:
+            existing_books = existing_books.exclude(pk=self.instance.pk)
+            
+        if existing_books.exists():
             raise forms.ValidationError("A book with this title already exists")
         return title.strip()
 

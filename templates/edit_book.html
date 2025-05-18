@@ -7,95 +7,295 @@
     <title>Edit Book - {{ book.title }}</title>
     <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
 
-
     <style>
-    
-
-        main {
-        max-width: 600px;
-        margin: 40px auto;
-        background: #fff;
-        padding: 30px 40px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border-radius: 8px;
+        .addbook {
+            margin-top: 150px;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
         }
 
-        h2 {
-        font-weight: 600;
-        margin-bottom: 20px;
-        color: #222;
-        text-align: center;
+        .addbook .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
 
-        form {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
+        .addbook .form-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 15px;
         }
 
-        form p {
-        margin: 0;
+        .addbook .form-col {
+            flex: 1;
         }
 
-        input[type="text"],
-        input[type="file"],
-        input[type="email"],
-        input[type="password"],
-        textarea,
-        select {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1.5px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-        transition: border-color 0.3s ease;
-        }
-
-        input[type="text"]:focus,
-        input[type="file"]:focus,
-        input[type="email"]:focus,
-        input[type="password"]:focus,
-        textarea:focus,
-        select:focus {
-        border-color: #1290A4; 
-        outline: none;
-        box-shadow: 0 0 5px rgba(59,130,246,0.4);
-        }
-
-        button[type="submit"] {
-        background-color: #1290A4; 
-        color: white;
-        border: none;
-        padding: 14px 0;
-        border-radius: 6px;
-        font-size: 18px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: background-color 0.3s ease;
-        }
-
-        button[type="submit"]:hover {
-        background-color: #1290A4; 
-        }
-
-        @media (max-width: 640px) {
-        main {
-            margin: 20px 15px;
+        .addbook .form-col.image-col {
+            flex: 0.7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f8f9fa;
             padding: 20px;
-        }
+            border-radius: 8px;
         }
 
+        .addbook .preview-container {
+            width: 100%;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            margin-top: 15px;
+            padding: 10px;
+        }
+
+        .addbook .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+            object-fit: contain;
+        }
+
+        .addbook .image-placeholder {
+            color: #666;
+            text-align: center;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .addbook .form-col.details-col {
+            flex: 1.3;
+        }
+
+        .addbook .form-group {
+            margin-bottom: 20px;
+        }
+
+        .addbook .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+
+        .addbook .form-control:focus {
+            border-color: #1290A4;
+            outline: none;
+            box-shadow: 0 0 5px rgba(18, 144, 164, 0.2);
+        }
+
+        .addbook .error-text {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+
+        .addbook button[type="submit"] {
+            background-color: #1290A4;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: fit-content;
+            align-self: center;
+            font-size: 16px;
+        }
+
+        .addbook button[type="submit"]:hover {
+            background-color: #0d7a8a;
+        }
+
+        .addbook h2 {
+            color: #1290A4;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .addbook form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .addbook label {
+            text-align: left;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .addbook input, .addbook textarea, .addbook select {
+            margin-top: 5px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .addbook textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .addbook .helptext {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* Messages styling */
+        .addbook .messages {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .addbook .message {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .addbook .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+
+        .addbook .error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
     </style>
 </head>
 <body>
     {% include "header.html" %}
-    <main>
-        <h2>Edit Book: {{ book.title }}</h2>
-        <form method="post" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Save Changes</button>
-        </form>
-    </main>
+    <div class="addbook">
+        <div class="container">
+            <h2>Edit Book: {{ book.title }}</h2>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-col details-col">
+                        <div class="form-group">
+                            {{ form.title.label_tag }}
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <div class="error-text">{{ form.title.errors }}</div>
+                            {% endif %}
+                            {% if form.title.help_text %}
+                                <span class="helptext">{{ form.title.help_text }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.author.label_tag }}
+                            {{ form.author }}
+                            {% if form.author.errors %}
+                                <div class="error-text">{{ form.author.errors }}</div>
+                            {% endif %}
+                            {% if form.author.help_text %}
+                                <span class="helptext">{{ form.author.help_text }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.category.label_tag }}
+                            {{ form.category }}
+                            {% if form.category.errors %}
+                                <div class="error-text">{{ form.category.errors }}</div>
+                            {% endif %}
+                            {% if form.category.help_text %}
+                                <span class="helptext">{{ form.category.help_text }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.description.label_tag }}
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div class="error-text">{{ form.description.errors }}</div>
+                            {% endif %}
+                            {% if form.description.help_text %}
+                                <span class="helptext">{{ form.description.help_text }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.status.label_tag }}
+                            {{ form.status }}
+                            {% if form.status.errors %}
+                                <div class="error-text">{{ form.status.errors }}</div>
+                            {% endif %}
+                            {% if form.status.help_text %}
+                                <span class="helptext">{{ form.status.help_text }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-col image-col">
+                        <div class="form-group">
+                            {{ form.image.label_tag }}
+                            {{ form.image }}
+                            {% if form.image.errors %}
+                                <div class="error-text">{{ form.image.errors }}</div>
+                            {% endif %}
+                            {% if form.image.help_text %}
+                                <span class="helptext">{{ form.image.help_text }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="preview-container">
+                            <img id="imagePreview" class="preview-image" src="{{ book.image.url }}" alt="Current image" style="display: block;" />
+                            <div id="imagePlaceholder" class="image-placeholder" style="display: none;">
+                                Select an image to preview
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Image preview functionality
+        document.getElementById('id_image').addEventListener('change', function(e) {
+            const preview = document.getElementById('imagePreview');
+            const placeholder = document.getElementById('imagePlaceholder');
+            const file = e.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    placeholder.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
 </html>

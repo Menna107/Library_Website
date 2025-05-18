@@ -182,13 +182,10 @@ def search_books(request):
     else:
         results = Book.objects.filter(title__icontains=query) | Book.objects.filter(author__icontains=query)
 
-    # إذا وجدنا كتاب واحد فقط نعيد التوجيه لصفحة تفاصيله
     if results.count() == 1:
-        book = results.first()
-        return redirect('bookdetails', book_id=book.id)
- # تأكد من اسم الـ URL واسم الباراميتر
+        return redirect('bookdetails', book_id=results.first().id)
 
-    # لو لا، نعرض صفحة نتائج البحث
+    # Always render the search results page, regardless of the number of results
     return render(request, 'search_results.html', {'results': results, 'query': query})
 
 @login_required

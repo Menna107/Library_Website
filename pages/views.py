@@ -173,7 +173,8 @@ def search_books(request):
     category = request.GET.get('category', 'all')
 
     if query == '':
-        return render(request, 'search_results.html', {'error': 'Please enter a search term.'})
+        messages.warning(request, 'Please enter a search term.')
+        return redirect(request.META.get('HTTP_REFERER', 'index'))
 
     if category == 'books':
         results = Book.objects.filter(title__icontains=query)
@@ -182,10 +183,11 @@ def search_books(request):
     else:
         results = Book.objects.filter(title__icontains=query) | Book.objects.filter(author__icontains=query)
 
-    if results.count() == 1:
-        return redirect('bookdetails', book_id=results.first().id)
+    if results.count() == 0:
+        messages.info(request, f'No books found matching "{query}"')
+        return redirect(request.META.get('HTTP_REFERER', 'index'))
 
-    # Always render the search results page, regardless of the number of results
+    # Always render the search results page if books are found
     return render(request, 'search_results.html', {'results': results, 'query': query})
 
 @login_required

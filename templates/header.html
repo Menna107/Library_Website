@@ -133,10 +133,99 @@
             height: 40px;
         }
 
+        /* Messages styling */
+        .messages-container {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .message {
+            padding: 15px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .message.info {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #bbdefb;
+        }
+
+        .message.warning {
+            background-color: #fff3e0;
+            color: #f57c00;
+            border: 1px solid #ffe0b2;
+        }
+
+        .message.success {
+            background-color: #e8f5e9;
+            color: #388e3c;
+            border: 1px solid #c8e6c9;
+        }
+
+        .message.error {
+            background-color: #ffebee;
+            color: #d32f2f;
+            border: 1px solid #ffcdd2;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Hide messages after 5 seconds */
+        .message {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .message.hide {
+            opacity: 0;
+        }
 
     </style>
 </head>
 <body>
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script>
+        // Auto-hide messages after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const messages = document.querySelectorAll('.message');
+                messages.forEach(function(message) {
+                    message.classList.add('hide');
+                    setTimeout(function() {
+                        message.remove();
+                    }, 500);
+                });
+            }, 5000);
+        });
+    </script>
+    {% endif %}
+
     <header>
         <div class="iaBar">
             <div class="container">

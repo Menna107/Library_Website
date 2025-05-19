@@ -12,7 +12,6 @@ Lib/
 pyvenv.cfg
 
 # Django static/media files
-media/
 staticfiles/
 productionfiles/
 

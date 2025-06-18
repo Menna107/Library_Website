@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+
     <style>
         .hero-section {
             position: relative;
@@ -106,6 +107,29 @@
             font-size: 2rem;
             cursor: pointer;
         }
+        .part4 .quote-text {
+            color: white;
+            padding-top: 100px;
+            margin-left: 60px;
+            font-size: 30px;
+            width: 45%;
+            opacity: 0;
+            transform: translateX(-100px);
+            animation: slideInLeft 1.5s ease-out forwards;
+        }
+
+        @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        }
+
+        
     </style>
 </head>
 <body>
@@ -156,7 +180,7 @@
 
 <!-- Footer Banner -->
 <div class="part4">
-    <div class="h2">
+    <div class="quote-text">
         <h2>What goes into the mind, comes out in a life.</h2>
     </div>
     <img src="{% static 'images/original-removebg-preview.png' %}" >

@@ -1,4 +1,3 @@
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -7,116 +6,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libré</title>
-    
+
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/Style.css' %}">
-   <style>
-    
-    h1 {
-        text-align: center;
-        margin: 40px 0 20px;
-        /* color: #333; */
-    }
 
-    .books-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 30px;
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .book-card {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        padding: 15px;
-        width: 250px;
-        transition: transform 0.3s ease;
-        text-align: center;
-    }
-
-    .book-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .book-card img {
-        border-radius: 5px;
-        margin-bottom: 10px;
-        height: 200px;
-        object-fit: cover;
-        width: 100%;
-    }
-
-    .book-card h3 {
-        font-size: 18px;
-        color: #222;
-        margin-bottom: 10px;
-    }
-
-    .book-card p {
-        font-size: 14px;
-        color: #666;
-        margin: 4px 0;
-    }
-
-    @media (max-width: 768px) {
-        .book-card {
-            width: 45%;
+    <style>
+        h1 {
+            text-align: center;
+            margin: 40px 0 20px;
         }
-    }
 
-    @media (max-width: 500px) {
+        .user-section {
+            text-align: left;
+            margin-bottom: 50px;
+            border-left: 5px solid #1290A4;
+            padding-left: 20px;
+            margin-left: 40px;
+        }
+
+        .user-name {
+            font-size: 22px;
+            color: #1290A4;
+            margin-bottom: 10px;
+        }
+
+        .books-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 10px 0;
+        }
+
         .book-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            width: 250px;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-card img {
+            border-radius: 5px;
+            margin-bottom: 10px;
+            height: 200px;
+            object-fit: cover;
             width: 100%;
         }
-    }
 
-</style>
+        .book-card h3 {
+            font-size: 18px;
+            color: #222;
+            margin-bottom: 10px;
+        }
 
+        .book-card p {
+            font-size: 14px;
+            color: #666;
+            margin: 4px 0;
+        }
+
+        @media (max-width: 768px) {
+            .book-card {
+                width: 45%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .book-card {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
-     <!-- /* Header Section */ -->
-     {% include "header.html" %}
-
+    {% include "header.html" %}
 
     <div style="margin-top: 170px;">
-    <h1 style="color: #1290A4;">My Borrowed Books</h1>
-    {% if borrowed_books %}
-        <div class="books-list">
-            {% for borrow in borrowed_books %}
-                <div class="book-card">
-    <img src="{{ borrow.book.image.url }}" alt="{{ borrow.book.title }}" width="150">
-    <h3>{{ borrow.book.title }}</h3>
-    <p><strong>Author:</strong> {{ borrow.book.author }}</p>
-    <p><strong>Category:</strong> {{ borrow.book.category }}</p>
-    <p><strong>Borrowed at:</strong> {{ borrow.borrowed_at }}</p>
 
-    <form action="{% url 'delete_borrow' borrow.id %}" method="POST" style="margin-top: 10px;">
-        {% csrf_token %}
-        <button type="submit" style="
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        ">Delete</button>
-    </form>
-</div>
+        {% if request.session.is_admin %}
+                <h1 style="color:#1290A4;">Users's Borrowed Books</h1>
 
+            {% for user, borrows in grouped_borrows.items %}
+                <div class="user-section">
+                    <div class="user-name">👤 {{ user.username }} Books</div>
+                    <div class="books-list">
+                        {% for borrow in borrows %}
+                            <div class="book-card">
+                                <img src="{{ borrow.book.image.url }}" alt="{{ borrow.book.title }}">
+                                <h3>{{ borrow.book.title }}</h3>
+                                <p><strong>Author:</strong> {{ borrow.book.author }}</p>
+                                <p><strong>Category:</strong> {{ borrow.book.category }}</p>
+                                <p><strong>Borrowed at:</strong> {{ borrow.borrowed_at }}</p>
+                                <form action="{% url 'delete_borrow' borrow.id %}" method="POST" style="margin-top: 10px;">
+                                    {% csrf_token %}
+                                    <button type="submit" style="background-color: #e74c3c; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Delete</button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             {% endfor %}
-        </div>
-    {% else %}
-        <p>You haven't borrowed any books yet.</p>
-    {% endif %}
+        {% else %}
+            {% if borrowed_books %}
+                <h1 style="color:#1290A4;">My Borrowed Books</h1>
+
+                <div class="user-section">
+                    <div class="books-list">
+                        {% for borrow in borrowed_books %}
+                            <div class="book-card">
+                                <img src="{{ borrow.book.image.url }}" alt="{{ borrow.book.title }}">
+                                <h3>{{ borrow.book.title }}</h3>
+                                <p><strong>Author:</strong> {{ borrow.book.author }}</p>
+                                <p><strong>Category:</strong> {{ borrow.book.category }}</p>
+                                <p><strong>Borrowed at:</strong> {{ borrow.borrowed_at }}</p>
+                                <form action="{% url 'delete_borrow' borrow.id %}" method="POST" style="margin-top: 10px;">
+                                    {% csrf_token %}
+                                    <button type="submit" style="background-color: #e74c3c; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Delete</button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <p style="text-align: center;">You haven't borrowed any books yet.</p>
+            {% endif %}
+        {% endif %}
     </div>
 
+    <script src="{% static 'js/header.js' %}"></script>
+    <script src="{% static 'js/My-books.js' %}"></script>
 </body>
-<script src="{% static 'js/header.js' %}"></script>
-<script src="{% static 'js/My-books.js' %}"></script>
 </html>

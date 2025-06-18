@@ -23,7 +23,7 @@ urlpatterns = [
     path('delete-book/<int:book_id>/', views.delete_book, name='delete_book'),
     path('edit-book/<int:book_id>/', views.edit_book, name='edit_book'),
 
-
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

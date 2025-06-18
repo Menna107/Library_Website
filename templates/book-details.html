@@ -36,10 +36,13 @@
             <img src="{{ book.image.url }} " alt="{{ book.title }} " class=".book-detail-image">
             <div class="button-group">
                 <!-- Borrow button -->
+                {% if not request.user.is_superuser %}
                 <form method="post" action="{% url 'borrow_book' book.id %}">
                     {% csrf_token %}
                     <button type="submit" class="buyNowBtn">Borrow</button>  
                 </form>
+                {% endif %}
+
 
                 <!-- Edit button for admin only -->
                 {% if request.session.is_admin %}

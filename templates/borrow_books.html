@@ -3,74 +3,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-	<link rel="stylesheet" href="{% static 'css/Style.css' %}">
-    
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <style>
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #cde6ea, #e1f3f5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 80px;
+            overflow: hidden;
+        }
 
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: 80px 80px;
+            z-index: 0;
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 800px;
+            color: #0f4c5c;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            color: #1290A4;
+        }
+
+        .hero-content p.section-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #0f4c5c;
+        }
+
+        .hero-categories {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .hero-cat-card {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 20px;
+            width: 140px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .hero-cat-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        .hero-cat-card p {
+            color: #1290A4;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .carousel-container {
+            padding: 40px 20px;
+            background-color: #f3f9fa;
+            border-top: 1px solid #d4e9ec;
+            scroll-margin-top: 150px;
+        }
+
+        .carousel-container p {
+            font-size: 1.8rem;
+            color: #0f4c5c;
+            font-weight: bold;
+        }
+
+        .arrow {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-     <!-- /* Header Section */ -->
-     {% include "header.html" %}
 
+{% include "header.html" %}
 
-    
-
-     
-    <div class="part2">
-        <div>
-            <h1> Borrow <span>Your</span>  Favourite <span>Book</span> from<span> Here</span></h1>
-        </div>
-        <div>
-            <img src="{% static 'images/imagee.jpeg' %}" >
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Borrow <span>Your</span> Favourite <span>Book</span> from <span>Here</span></h1>
+        <p class="section-title">Our Best Selling Categories:</p>
+        <div class="hero-categories">
+            <a href="#category-1" class="hero-cat-card">
+                <p>kids</p>
+            </a>
+            <a href="#category-2" class="hero-cat-card">
+                <p>trending </p>
+            </a>
+            <a href="#category-5" class="hero-cat-card">
+                <p>Adventure</p>
+            </a>
         </div>
     </div>
-   {% for cat in category %}
-    <div class="carousel-container" id="category-{{ cat.id }}">
-        <p id="category-title" class="cat{{ cat.id }}">{{ cat.name }}</p> 
-        <button class="arrow left" onclick="scrollleft(this)">&#10094;</button>
+</section>
 
-        <div class="part3" id="carousel{{ cat.id }}" style="display: flex; flex-direction: row; width: 100%;">
-            {% for book in books %}
-                {% if book.category.id == cat.id %}
-                    <div style="padding: 20px;" class="bookhide book{{ book.category.id }}">
-                        <img src="{{ book.image.url }}" alt="{{ book.title }}">
-                        <center>
-                            <a href="{% url 'bookdetails' book.id %}">
-                                <button>Details</button>
-                            </a>
-                        </center>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-
-        <button class="arrow right" onclick="scrollRight(this)">&#10095;</button>
+<!-- Book Categories -->
+{% for cat in category %}
+<div class="carousel-container" id="category-{{ cat.id }}">
+    <p>{{ cat.name }}</p> 
+    <button class="arrow left" onclick="scrollleft(this)">&#10094;</button>
+    <div class="part3" id="carousel{{ cat.id }}" style="display: flex; flex-direction: row; width: 100%;">
+        {% for book in books %}
+            {% if book.category.id == cat.id %}
+                <div style="padding: 20px;" class="bookhide book{{ book.category.id }}">
+                    <img src="{{ book.image.url }}" alt="{{ book.title }}">
+                    <center>
+                        <a href="{% url 'bookdetails' book.id %}">
+                            <button>Details</button>
+                        </a>
+                    </center>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
+    <button class="arrow right" onclick="scrollRight(this)">&#10095;</button>
+</div>
 {% endfor %}
 
+<!-- Footer Banner -->
+<div class="part4">
+    <div class="h2">
+        <h2>What goes into the mind, comes out in a life.</h2>
+    </div>
+    <img src="{% static 'images/original-removebg-preview.png' %}" >
+</div>
 
-
-    
-
-
-
-     <div class="part4">
-        <div class="h2">
-            <h2>What goes into the mind, comes out in a life.</h2></div>
-        <img src="{% static 'images/original-7548ac6592731055c6337fc063e864811.png' %}" >
-        </div>
-    </div> 
 <script src="{% static 'js/borrow books.js' %}"></script>
 <script src="{% static 'js/header.js' %}"></script>
 
-<!-- Footer Section -->
 {% include "footer.html" %}
-
 </body>
-
-
-
 </html>

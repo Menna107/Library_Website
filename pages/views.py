@@ -154,15 +154,34 @@ def borrow_book(request, book_id):
 
 @login_required
 def my_books(request):
-    borrowed_books = Borrow.objects.filter(user=request.user).select_related('book')
-    return render(request, 'my-books.html', {'borrowed_books': borrowed_books})
+    if request.session.get('is_admin'):
+        # Group borrows by user for admin
+        from collections import defaultdict
+        grouped = defaultdict(list)
+        for borrow in Borrow.objects.select_related('book', 'user'):
+            grouped[borrow.user].append(borrow)
+
+        grouped_borrows = dict(grouped)   # هذا مهم
+
+        return render(request, 'my-books.html', {'grouped_borrows': grouped_borrows})
+    else:
+        # For normal users
+        borrowed_books = Borrow.objects.filter(user=request.user).select_related('book')
+        return render(request, 'my-books.html', {'borrowed_books': borrowed_books})
 
 @login_required
 def delete_borrow(request, borrow_id):
+    # لو الأدمن حاول يدخل هنا
+    if request.session.get('is_admin'):
+        messages.error(request, "Admins are not allowed to delete borrowed books.")
+        return redirect('my_books')
+
+    # باقي المستخدمين العاديين
     borrow = get_object_or_404(Borrow, id=borrow_id, user=request.user)
     borrow.delete()
+    messages.success(request, "Borrowed book deleted successfully.")
     return redirect('my_books')
-    return redirect('my_books') 
+
 
 
 from django.shortcuts import render, redirect, get_object_or_404

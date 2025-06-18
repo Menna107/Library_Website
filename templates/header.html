@@ -285,7 +285,13 @@
                 <ul>
                     <li><a href="{% url 'index' %}">Home</a></li>
                     <li><a href="{% url 'index' %}#Bestselling-books-id">View Books</a></li>
-                    <li><a href="{% url 'my_books' %}">My Books</a></li>
+                    {% if request.session.is_admin %}
+                        <li><a href="{% url 'my_books' %}">User's Books</a></li>
+                    {% else %}
+                        <li><a href="{% url 'my_books' %}">My Books</a></li>
+                    {% endif %}
+
+
                     <li>
                         <div class="browse-dropdown">
                             <button class="browse-button">Browse <i class="fa-solid fa-angle-down"></i></button>

@@ -15,7 +15,7 @@ class Book(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     description = models.TextField()
     image = models.ImageField(upload_to='book_covers/', default='book_covers/default.jpg')
-    status= models.CharField(max_length=50,choices =status_book)
+    status = models.CharField(max_length=50, choices=status_book, default='available')
 
     def __str__(self):
         return self.title
@@ -32,3 +32,12 @@ class Borrow(models.Model):
 
     def __str__(self):
         return f"{self.user.username} borrowed {self.book.title}"
+from django.db import models
+from django.contrib.auth.models import User
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='profile_pics/', default='default.jpg')
+
+    def __str__(self):
+        return f"{self.user.username} Profile"

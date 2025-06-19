@@ -242,3 +242,33 @@ def edit_book(request, book_id):
         form = BookForm(instance=book)
 
     return render(request, 'edit_book.html', {'form': form, 'book': book})
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
+@login_required
+def user_profile(request):
+    return render(request, 'user_profile.html', {
+        'user': request.user
+    })
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import UserUpdateForm, ProfileUpdateForm
+
+@login_required
+def profile_update(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('user_profile')  
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+
+    return render(request, 'edit_profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    })

@@ -30,25 +30,43 @@
       background: none;
     }
 
-    .user-avatar {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
+    #acount button {
+      background: none;
       border: none;
-      display: block;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: box-shadow 0.2s, transform 0.2s;
     }
-
+    #acount button:focus-visible {
+      outline: 2px solid #1290A4;
+    }
+    .user-avatar, .user-icon-placeholder {
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    #acount button:hover .user-avatar,
+    #acount button:focus .user-avatar,
+    #acount button:hover .user-icon-placeholder,
+    #acount button:focus .user-icon-placeholder {
+      box-shadow: 0 4px 16px rgba(18,144,164,0.18);
+      transform: scale(1.08);
+      background: #f0f8fa;
+    }
     .user-icon-placeholder {
       width: 50px;
       height: 50px;
       font-size: 40px;
-      color: white;
-      background-color: #888;
+      color: #bbb;
+      background-color: #f0f0f0;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: box-shadow 0.2s, transform 0.2s;
     }
 
     .logout-link {
@@ -128,6 +146,192 @@
       align-items: center;
       gap: 10px;
     }
+
+    .profile-sidebar {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 350px;
+      height: 100vh;
+      background: #fff !important;
+      box-shadow: -2px 0 32px 0 rgba(18,144,164,0.18);
+      z-index: 2001;
+      transition: right 0.38s cubic-bezier(.4,0,.2,1);
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+      border-top-left-radius: 22px;
+      border-bottom-left-radius: 22px;
+      overflow: hidden;
+    }
+    .profile-sidebar.active {
+      right: 0;
+      pointer-events: auto;
+    }
+    .sidebar-content {
+      background: #fff !important;
+      padding: 44px 28px 28px 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      min-height: 100%;
+      box-sizing: border-box;
+    }
+    .close-sidebar {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: #f8f9fa;
+      border: none;
+      font-size: 28px;
+      color: #1290A4;
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .close-sidebar:hover, .close-sidebar:focus {
+      color: #fff;
+      background: #d9534f;
+    }
+    .sidebar-profile-pic {
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 120px;
+    }
+    .sidebar-avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+      border: 3px solid #e0e0e0;
+      box-shadow: 0 6px 24px rgba(18,144,164,0.18);
+      background: #fff;
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: block;
+      overflow: hidden;
+    }
+    .sidebar-avatar-placeholder {
+      font-size: 110px;
+      color: #bbb;
+      background: #f0f0f0;
+      border-radius: 50%;
+      width: 110px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(18,144,164,0.13);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .sidebar-info {
+      width: 100%;
+      margin-bottom: 32px;
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+    .sidebar-info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 11px 16px;
+      font-size: 16px;
+      color: #333;
+      font-weight: 500;
+      box-shadow: 0 1px 4px rgba(18,144,164,0.04);
+    }
+    .sidebar-info-item i {
+      color: #1290A4;
+      font-size: 18px;
+      min-width: 20px;
+      text-align: center;
+    }
+    .sidebar-info-item strong {
+      min-width: 90px;
+      font-weight: 600;
+      color: #1290A4;
+    }
+    .sidebar-info-item span {
+      flex: 1;
+      color: #444;
+      font-weight: 500;
+      text-align: left;
+    }
+    .sidebar-edit-btn {
+      display: block;
+      width: 100%;
+      padding: 15px 0;
+      background: linear-gradient(90deg, #1290A4 60%, #0d7a8a 100%);
+      color: #fff;
+      text-align: center;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: auto;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 12px rgba(18,144,164,0.10);
+      letter-spacing: 0.5px;
+      border: none;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      
+      margin-top: -20px;
+    }
+    .del-btn{
+      margin-top: -10px;
+    }
+    .sidebar-edit-btn:hover, .sidebar-edit-btn:focus {
+      background: linear-gradient(90deg, #0d7a8a 60%, #1290A4 100%);
+      box-shadow: 0 4px 18px rgba(18,144,164,0.16);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.25);
+      z-index: 2000;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .profile-sidebar.active + .sidebar-overlay,
+    .profile-sidebar .sidebar-overlay.active {
+      display: block;
+      opacity: 1;
+      transition: opacity 0.3s;
+      z-index: -1;
+    }
+
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+      border: 2.5px solid #e0e0e0;
+      box-shadow: 0 4px 16px rgba(18,144,164,0.13);
+      background: #fff;
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: block;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
@@ -191,14 +395,17 @@
           </li>
 
           <li id="acount">
-            <a href="{% url 'user_profile' %}">
-              {% if user.profile.image %}
+            <button id="profileSidebarBtn" style="background:none;border:none;padding:0;margin:0;cursor:pointer;">
+              {% if user.profile.image and user.profile.image.url %}
                 <img src="{{ user.profile.image.url }}" alt="Profile" class="user-avatar">
               {% else %}
-                <i class="fas fa-user-circle user-icon-placeholder"></i>
+                <span class="user-icon-placeholder" style="width:50px;height:50px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:50%;border:2.5px solid #e0e0e0;box-shadow:0 4px 16px rgba(18,144,164,0.13);">
+                  <i class="fas fa-user-circle" style="font-size:38px;color:#bbb;"></i>
+                </span>
               {% endif %}
-            </a>
+            </button>
           </li>
+          
 
         {% else %}
           <li><a href="{% url 'login' %}">Login</a></li>
@@ -234,6 +441,75 @@
   </nav>
 </header>
 
+<!-- User Profile Sidebar -->
+<div id="profileSidebar" class="profile-sidebar">
+  <div class="sidebar-content">
+    <button class="close-sidebar" id="closeSidebarBtn">&times;</button>
+    <div class="sidebar-profile-pic">
+      {% if user.profile.image and user.profile.image.url %}
+        <img src="{{ user.profile.image.url }}" alt="Profile Picture" class="sidebar-avatar" />
+      {% else %}
+        <span class="sidebar-avatar-placeholder"><i class="fas fa-user-circle"></i></span>
+      {% endif %}
+    </div>
+    <div class="sidebar-info">
+      <div class="sidebar-info-item"><i class="fas fa-user"></i><strong>Username:</strong> <span>{{ user.username }}</span></div>
+      <div class="sidebar-info-item"><i class="fas fa-envelope"></i><strong>Email:</strong> <span>{{ user.email }}</span></div>
+      <div class="sidebar-info-item"><i class="fas fa-phone"></i><strong>Phone:</strong> <span>{{ user.profile.phone_number|default:'—' }}</span></div>
+      <div class="sidebar-info-item"><i class="fas fa-map-marker-alt"></i><strong>Address:</strong> <span>{{ user.profile.address|default:'—' }}</span></div>
+      <div class="sidebar-info-item"><i class="fas fa-birthday-cake"></i><strong>Birth Date:</strong> <span>{{ user.profile.birth_date|default:'—' }}</span></div>
+      <div class="sidebar-info-item"><i class="fas fa-venus-mars"></i><strong>Gender:</strong> <span>{{ user.profile.gender|default:'—' }}</span></div>
+      <div class="sidebar-info-item"><i class="fas fa-calendar-alt"></i><strong>Member Since:</strong> <span>{{ user.date_joined|date:"F d, Y" }}</span></div>
+    </div>
+    <div style="width:100%; display:flex; flex-direction:column; gap:12px; margin-top:auto; margin-bottom:18px;">
+      <button type="button" class="sidebar-edit-btn" id="sidebarEditProfileBtn">Edit Profile</button>
+      {% if not request.session.is_admin %}
+        <form method="POST" action="{% url 'delete_account' %}" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');" style="width:100%;">
+          {% csrf_token %}
+          <button type="submit" class="sidebar-edit-btn del-btn" style="background:#d9534f;">Delete Account</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+</div>
+
 <script src="{% static 'js/header.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var sidebar = document.getElementById('profileSidebar');
+  var btn = document.getElementById('profileSidebarBtn');
+  var closeBtn = document.getElementById('closeSidebarBtn');
+  var overlay = document.getElementById('sidebarOverlay');
+  var editBtn = document.getElementById('sidebarEditProfileBtn');
+
+  if(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      sidebar.classList.add('active');
+      overlay.classList.add('active');
+    });
+  }
+  if(closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+  }
+  if(overlay) {
+    overlay.addEventListener('click', function() {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+  }
+  if(editBtn) {
+    editBtn.addEventListener('click', function() {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+      window.location.href = "{% url 'edit_profile' %}";
+    });
+  }
+});
+</script>
 </body>
 </html>

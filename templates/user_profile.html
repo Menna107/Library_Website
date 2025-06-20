@@ -191,7 +191,11 @@
 
         <!-- صورة المستخدم -->
         <div class="image-col">
-          <img src="{{ user.profile.image.url }}" alt="Profile Picture" class="profile-image" />
+          {% if user.profile.image and user.profile.image.url %}
+            <img src="{{ user.profile.image.url }}" alt="Profile Picture" class="profile-image" />
+          {% else %}
+            <span class="sidebar-avatar-placeholder" style="font-size:110px;color:#bbb;background:#f0f0f0;border-radius:50%;width:110px;height:110px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(18,144,164,0.13);"><i class="fas fa-user-circle"></i></span>
+          {% endif %}
         </div>
       </div>
     </div>

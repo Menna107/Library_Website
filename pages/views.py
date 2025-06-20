@@ -245,11 +245,14 @@ def edit_book(request, book_id):
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+
 @login_required
 def user_profile(request):
     return render(request, 'user_profile.html', {
-        'user': request.user
+        'user': request.user,
+        'is_admin': request.session.get('is_admin', False)
     })
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm

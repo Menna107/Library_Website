@@ -396,13 +396,13 @@
 
           <li id="acount">
             <button id="profileSidebarBtn" style="background:none;border:none;padding:0;margin:0;cursor:pointer;">
-              {% if user.profile.image and user.profile.image.url %}
+            {% if user.profile.image and user.profile.image.name %}
                 <img src="{{ user.profile.image.url }}" alt="Profile" class="user-avatar">
-              {% else %}
-                <span class="user-icon-placeholder" style="width:50px;height:50px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:50%;border:2.5px solid #e0e0e0;box-shadow:0 4px 16px rgba(18,144,164,0.13);">
-                  <i class="fas fa-user-circle" style="font-size:38px;color:#bbb;"></i>
-                </span>
-              {% endif %}
+            {% else %}
+                <img src="{% static 'images/user.png' %}" alt="Default Profile" class="user-avatar">
+            {% endif %}
+
+
             </button>
           </li>
           
@@ -446,11 +446,13 @@
   <div class="sidebar-content">
     <button class="close-sidebar" id="closeSidebarBtn">&times;</button>
     <div class="sidebar-profile-pic">
-      {% if user.profile.image and user.profile.image.url %}
-        <img src="{{ user.profile.image.url }}" alt="Profile Picture" class="sidebar-avatar" />
+      {% if user.profile.image and user.profile.image.name %}
+          <img src="{{ user.profile.image.url }}" alt="Profile Picture" class="sidebar-avatar" />
       {% else %}
-        <span class="sidebar-avatar-placeholder"><i class="fas fa-user-circle"></i></span>
+          <img src="{% static 'images/user.png' %}" alt="Default Profile Picture" class="sidebar-avatar" />
       {% endif %}
+
+
     </div>
     <div class="sidebar-info">
       <div class="sidebar-info-item"><i class="fas fa-user"></i><strong>Username:</strong> <span>{{ user.username }}</span></div>
@@ -462,7 +464,10 @@
       <div class="sidebar-info-item"><i class="fas fa-calendar-alt"></i><strong>Member Since:</strong> <span>{{ user.date_joined|date:"F d, Y" }}</span></div>
     </div>
     <div style="width:100%; display:flex; flex-direction:column; gap:12px; margin-top:auto; margin-bottom:18px;">
-      <button type="button" class="sidebar-edit-btn" id="sidebarEditProfileBtn">Edit Profile</button>
+      {% if not request.session.is_admin %}
+        <button type="button" class="sidebar-edit-btn" id="sidebarEditProfileBtn">Edit Profile</button>
+      {% endif %}
+
       {% if not request.session.is_admin %}
         <form method="POST" action="{% url 'delete_account' %}" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');" style="width:100%;">
           {% csrf_token %}

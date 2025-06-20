@@ -21,7 +21,6 @@ class Book(models.Model):
         return self.title
 
 
-# Create your models here.
 
 from django.contrib.auth.models import User
 
@@ -37,7 +36,7 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='profile_pics/',default='default.jpg')
+    image = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg')
 
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     address = models.TextField(blank=True, null=True)

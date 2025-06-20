@@ -1,84 +1,310 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Edit Profile</title>
+  <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
+
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f4f8;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .form-container {
-      background-color: #fff;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 500px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #1290A4;
-      margin-bottom: 30px;
-    }
-
-    form {
+    .addbook {
+      margin-top: 150px;
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
     }
 
-    label {
-      font-weight: bold;
-      margin-bottom: 5px;
+    .addbook .container {
+      width: 80%;
+      max-width: 800px;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    .addbook .form-row {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 15px;
+    }
+
+    .addbook .form-col.details-col {
+      flex-basis: 70%;
+      max-width: 70%;
+    }
+
+    .addbook .form-col.image-col {
+      flex-basis: 30%;
+      max-width: 30%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .addbook .form-col.image-col .form-group {
+  width: 100%;
+  text-align: center;
+  word-break: break-word;
+}
+
+.addbook input[type="file"] {
+  max-width: 100%;
+  padding: 5px;
+  font-size: 14px;
+}
+
+    .addbook .form-group {
+      margin-bottom: 20px;
+    }
+
+    .addbook .form-control {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      transition: border-color 0.3s ease;
+    }
+
+    .addbook .form-control:focus {
+      border-color: #1290A4;
+      outline: none;
+      box-shadow: 0 0 5px rgba(18, 144, 164, 0.2);
+    }
+
+    .addbook label {
+      text-align: left;
+      margin-top: 10px;
+      font-weight: 500;
       color: #333;
     }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="file"],
-    select {
-      padding: 10px;
+    .addbook input, .addbook textarea, .addbook select {
+      margin-top: 5px;
+      padding: 8px;
+      border-radius: 5px;
       border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-bottom: 20px;
-      font-size: 16px;
       width: 100%;
     }
 
-    button {
+    .addbook .helptext {
+      font-size: 0.85em;
+      color: #666;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .addbook .error-text {
+      color: #dc3545;
+      font-size: 0.875rem;
+      margin-top: 5px;
+    }
+
+    .addbook .preview-container {
+      width: 100%;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      margin-top: 15px;
+      padding: 10px;
+    }
+
+    .addbook .preview-image {
+      max-width: 100%;
+      max-height: 300px;
+      margin-top: 10px;
+      border-radius: 5px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .addbook .image-placeholder {
+      color: #666;
+      text-align: center;
+      font-size: 0.9em;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .addbook button[type="submit"] {
       background-color: #1290A4;
       color: white;
-      padding: 12px;
+      padding: 12px 24px;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      width: fit-content;
+      align-self: center;
+      font-size: 16px;
     }
 
-    button:hover {
-      background-color: #107d8e;
+    .addbook button[type="submit"]:hover {
+      background-color: #0d7a8a;
     }
 
+    .addbook h2 {
+      color: #1290A4;
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .addbook .messages {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .addbook .message {
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+    }
+
+    .addbook .success {
+      background-color: #dff0d8;
+      color: #3c763d;
+      border: 1px solid #d6e9c6;
+    }
+
+    .addbook .error {
+      background-color: #f2dede;
+      color: #a94442;
+      border: 1px solid #ebccd1;
+    }
+    .submit-btn {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <h2>Edit Your Profile</h2>
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ user_form.as_p }}
-      {{ profile_form.as_p }}
-      <button type="submit">Save Changes</button>
-    </form>
+  {% include "header.html" %}
+
+  <div class="addbook">
+    <div class="container">
+      <h2>Edit Your Profile</h2>
+
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="form-row">
+          <!-- بيانات المستخدم -->
+          <div class="form-col details-col">
+            <div class="form-group">
+              {{ user_form.username.label_tag }}
+              {{ user_form.username }}
+              {% if user_form.username.errors %}
+                <div class="error-text">{{ user_form.username.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              {{ user_form.email.label_tag }}
+              {{ user_form.email }}
+              {% if user_form.email.errors %}
+                <div class="error-text">{{ user_form.email.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              {{ profile_form.phone_number.label_tag }}
+              {{ profile_form.phone_number }}
+              {% if profile_form.phone_number.errors %}
+                <div class="error-text">{{ profile_form.phone_number.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              {{ profile_form.address.label_tag }}
+              {{ profile_form.address }}
+              {% if profile_form.address.errors %}
+                <div class="error-text">{{ profile_form.address.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              {{ profile_form.birth_date.label_tag }}
+              {{ profile_form.birth_date }}
+              {% if profile_form.birth_date.errors %}
+                <div class="error-text">{{ profile_form.birth_date.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              {{ profile_form.gender.label_tag }}
+              {{ profile_form.gender }}
+              {% if profile_form.gender.errors %}
+                <div class="error-text">{{ profile_form.gender.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- صورة البروفايل -->
+          <div class="form-col image-col">
+            <div class="form-group">
+              <label for="id_image">Upload a profile image (max 5MB, formats: JPG, PNG)</label>
+              {{ profile_form.image }}
+              {% if profile_form.image.errors %}
+                <div class="error-text">{{ profile_form.image.errors }}</div>
+              {% endif %}
+              {% if profile_form.image.help_text %}
+                <span class="helptext">{{ profile_form.image.help_text }}</span>
+              {% endif %}
+            </div>
+
+            <div class="preview-container">
+              <img id="imagePreview" class="preview-image" src="{{ profile.image.url }}" alt="Current image" />
+              <div id="imagePlaceholder" class="image-placeholder">
+                Select an image to preview
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-btn">
+          <button type="submit">Save Changes</button>
+        </div>
+      </form>
+    </div>
   </div>
+
+  <script>
+    document.getElementById('id_image').addEventListener('change', function(e) {
+      const preview = document.getElementById('imagePreview');
+      const placeholder = document.getElementById('imagePlaceholder');
+      const file = e.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+          placeholder.style.display = 'none';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,74 +1,200 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>User Profile</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Profile</title>
+  <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
+
+  <style>
+    .profile-page {
+      margin-top: 130px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+    }
+
+    .profile-container {
+      display: flex;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      width: 100%;
+      gap: 30px;
+    }
+
+    .details-col {
+      flex: 1.3;
+    }
+
+   .image-col {
+        flex: 0.7;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; /* ده اللي يخلي الصورة تتوسط رأسياً */
+        min-height: 100%; /* أو حطي قيمة مناسبة حسب التصميم */
         }
 
-        .profile-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
 
-        .profile-container h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #1290A4;
-        }
+    .profile-image {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: contain;
+      border: 2px solid #e0e0e0;
+      margin-bottom: 20px;
+    }
 
-        .profile-container p {
-            font-size: 16px;
-            margin: 10px 0;
-        }
+    .details-col h2 {
+      font-size: 22px;
+      color: #1290A4;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-        .button-group {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
+    .info-box {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
 
-        .button-group a {
-            background-color: #1290A4;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
+    .info-item {
+      margin-bottom: 18px;
+    }
 
-        .button-group a:hover {
-            background-color: #0e6b7d;
-        }
-    </style>
+    .info-item label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    .info-value {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px 15px;
+      font-size: 15px;
+      color: #555;
+    }
+
+    .button-group {
+      margin-top: 25px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .button-group a,
+    .button-group form button {
+      background-color: #1290A4;
+      color: white;
+      width: 150px;
+      padding: 10px 22px;
+      border-radius: 5px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .button-group a:hover {
+      background-color: #0d7a8a;
+    }
+
+    .button-group .delete-btn {
+      background-color: #d9534f;
+    }
+
+    .button-group .delete-btn:hover {
+      background-color: #c9302c;
+    }
+
+    .welcome-text {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 26px;
+      color: #1290A4;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    <div class="profile-container">
-        <img src="{{ user.profile.image.url }}" alt="Profile Picture" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
-        <h1>Welcome, {{ user.username }}</h1>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Member since:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
-        
+  {% include "header.html" %}
+
+  <div class="profile-page">
+    <div style="width: 100%; max-width: 900px;">
+      <div class="welcome-text">Welcome, {{ user.username }}</div>
+
+      <div class="profile-container">
+        <!-- بيانات المستخدم -->
+        <div class="details-col">
+          <h2>Profile Information</h2>
+          <div class="info-box">
+
+            <div class="info-item">
+              <label>Email</label>
+              <div class="info-value">{{ user.email }}</div>
+            </div>
+
+            <div class="info-item">
+              <label>Phone Number</label>
+              <div class="info-value">{{ user.profile.phone_number }}</div>
+            </div>
+
+            <div class="info-item">
+              <label>Address</label>
+              <div class="info-value">{{ user.profile.address }}</div>
+            </div>
+
+            <div class="info-item">
+              <label>Birth Date</label>
+              <div class="info-value">{{ user.profile.birth_date }}</div>
+            </div>
+
+            <div class="info-item">
+              <label>Gender</label>
+              <div class="info-value">{{ user.profile.gender }}</div>
+            </div>
+
+            <div class="info-item">
+              <label>Member Since</label>
+              <div class="info-value">{{ user.date_joined|date:"F d, Y" }}</div>
+            </div>
+          </div>
+
+        {% if not request.session.is_admin %}
         <div class="button-group">
             <a href="{% url 'edit_profile' %}">Edit Profile</a>
-            <a href="{% url 'logout' %}" onclick="return confirm('Are you sure you want to log out?');">Log Out</a>
+
+            <form method="POST" action="{% url 'delete_account' %}" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+            {% csrf_token %}
+            <button type="submit" class="delete-btn">Delete Account</button>
+            </form>
         </div>
+        {% endif %}
+        </div>
+
+        <!-- صورة المستخدم -->
+        <div class="image-col">
+          <img src="{{ user.profile.image.url }}" alt="Profile Picture" class="profile-image" />
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>

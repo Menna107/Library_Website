@@ -198,4 +198,18 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['image']
+        fields = ['image', 'phone_number', 'address', 'birth_date', 'gender']
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Address'}),
+            'birth_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'image': 'Upload a profile image (max 5MB)',
+            'phone_number': 'Phone Number',
+            'address': 'Address',
+            'birth_date': 'Date of Birth',
+            'gender': 'Gender',
+        }

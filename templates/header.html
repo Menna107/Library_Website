@@ -2,311 +2,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Libré</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Libré</title>
 
-    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'css/Style.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+  <link rel="stylesheet" href="{% static 'css/Style.css' %}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-XwEi4FDsfTOj7ae5k5pkiQgDsLG+eY8XgjlzqJx0hZdD8SfhvH1GkKlScXzCjXAV5VcL+6KzRLkGRzRzUoVvWg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+  <style>
+    .iaBar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
 
-    <style>
-        .account-menu {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center; 
-            cursor: pointer;
-            color: white;
-            font-weight: 600;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 5px 10px; 
-            border-radius: 6px;
-            transition: background-color 0.3s ease;
-        }
+    #acount {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      background: none;
+    }
 
-        .account-menu:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
+    .user-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: none;
+      display: block;
+    }
 
-        .account-menu i,
-        .account-menu svg {
-            margin-right: 6px;
-            fill: white;
-            width: 22px;
-            height: 22px;
-        }
+    .user-icon-placeholder {
+      width: 50px;
+      height: 50px;
+      font-size: 40px;
+      color: white;
+      background-color: #888;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .profile-hover-info {
-            display: none;
-            position: absolute;
-            top: 110%;
-            right: 0;
-            background-color: #ffffff;
-            color: #333333;
-            padding: 15px 20px;
-            border-radius: 8px;
-            width: 120px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 150;
-            font-size: 14px;
-            line-height: 1.4;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.25s ease, transform 0.25s ease;
-            transform: translateY(-10px);
-        }
+    .logout-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 8px 16px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
 
-        .account-menu:hover .profile-hover-info {
-            display: block;
-            pointer-events: auto;
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .logout-link:hover {
+      text-decoration: underline;
+    }
 
-        .profile-hover-info p {
-            margin: 6px 0;
-        }
+    .add-new-book-text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 8px 16px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
 
-        .profile-hover-info strong {
-            font-size: 16px;
-            color: #222222;
-        }
+    .user-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-        .logout-link{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            padding: 8px 16px;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
+    #add-book-btn, #logout-btn {
+      width: 100px;
+      height: 40px;
+    }
 
-        .logout-link:hover {
-            text-decoration: underline;
-        }
+    .messages-container {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
 
-        .add-new-book-text{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            padding: 8px 16px;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
-        #acount{
-            order:6;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-        .account-menu svg {
-            margin: 0;
-            padding: 0;
-            width: 80%;
-            height: 80%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .user-nav{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .user-nav .logout-link{
-            padding: 0;
-        }
-        #add-book-btn, #logout-btn{
-            margin-left: 10px;
-            width: 100px;
-            height: 40px;
-        }
+    .message {
+      padding: 15px 20px;
+      margin: 10px;
+      border-radius: 5px;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      animation: slideDown 0.5s ease-out;
+    }
 
-        /* Messages styling */
-        .messages-container {
-            position: fixed;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
-        }
+    .message.info { background-color: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb; }
+    .message.warning { background-color: #fff3e0; color: #f57c00; border: 1px solid #ffe0b2; }
+    .message.success { background-color: #e8f5e9; color: #388e3c; border: 1px solid #c8e6c9; }
+    .message.error { background-color: #ffebee; color: #d32f2f; border: 1px solid #ffcdd2; }
 
-        .message {
-            padding: 15px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            animation: slideDown 0.5s ease-out;
-        }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
 
-        .message.info {
-            background-color: #e3f2fd;
-            color: #1976d2;
-            border: 1px solid #bbdefb;
-        }
+    .message.hide {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
 
-        .message.warning {
-            background-color: #fff3e0;
-            color: #f57c00;
-            border: 1px solid #ffe0b2;
-        }
-
-        .message.success {
-            background-color: #e8f5e9;
-            color: #388e3c;
-            border: 1px solid #c8e6c9;
-        }
-
-        .message.error {
-            background-color: #ffebee;
-            color: #d32f2f;
-            border: 1px solid #ffcdd2;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Hide messages after 5 seconds */
-        .message {
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .message.hide {
-            opacity: 0;
-        }
-
-    </style>
+    .search-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
 </head>
 <body>
-    {% if messages %}
-    <div class="messages-container">
-        {% for message in messages %}
-            <div class="message {{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
-    <script>
-        // Auto-hide messages after 5 seconds
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const messages = document.querySelectorAll('.message');
-                messages.forEach(function(message) {
-                    message.classList.add('hide');
-                    setTimeout(function() {
-                        message.remove();
-                    }, 500);
-                });
-            }, 5000);
+
+{% if messages %}
+  <div class="messages-container">
+    {% for message in messages %}
+      <div class="message {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        const messages = document.querySelectorAll('.message');
+        messages.forEach(function(message) {
+          message.classList.add('hide');
+          setTimeout(() => message.remove(), 500);
         });
-    </script>
-    {% endif %}
+      }, 5000);
+    });
+  </script>
+{% endif %}
 
-    <header>
-        <div class="iaBar">
-            <div class="container">
-                <div class="logo">
-                    <a href="{% url 'index' %}"><h1><i class="fa-solid fa-book-open"></i> Libré</h1></a>               
-                </div>                
+<header>
+  <div class="iaBar">
+    <div class="container">
+      <!-- Logo -->
+      <div class="logo">
+        <a href="{% url 'index' %}">
+          <h1><i class="fa-solid fa-book-open"></i> Libré</h1>
+        </a>
+      </div>
 
-                <!-- Search Bar -->
-                <form action="{% url 'search_books' %}" method="get" class="search-container">
-                    <select name="category" class="search-dropdown">
-                        <option value="all">All</option>
-                        <option value="books">Books</option>
-                        <option value="authors">Authors</option>
-                    </select>
-                    <input type="text" name="q" class="search-input" placeholder="Search" required>
-                    <button type="submit" class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </form>
-                
-                <!-- User Nav -->
-                <ul class="user-nav">
-                {% if user.is_authenticated %}
-                    {% if request.session.is_admin %}
-                        <li style="margin-left: 10px; position: relative;" id="add-book-btn" >
-                            <a href="{% url 'addnewbook' %}" title="Add New Book" class="add-new-book-btn">
-                                <i class="fa-solid fa-plus"></i>
-                                <span class="add-new-book-text">Add</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    <li class="account-menu" id="acount">
-                        <a href="{% url 'user_profile' %}" style="display: block;">
-                            <div class="account-menu">
-                                <i class="fas fa-user"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="20" viewBox="0 0 24 24" width="20">
-                                    <path d="M12 12c2.67 0 8 1.34 8 4v2H4v-2c0-2.66 5.33-4 8-4zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
-                                </svg>
-                                <div class="profile-hover-info">
-                                    <p><strong>{{ user.username }}</strong></p>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="logout-link" id="logout-btn">
-                        <a href="{% url 'logout' %}" class="logout-link" title="Logout" onclick="return confirm('Are you sure you want to log out?');">Logout</a>
-                    </li>
+      <!-- Search -->
+      <form action="{% url 'search_books' %}" method="get" class="search-container">
+        <select name="category" class="search-dropdown">
+          <option value="all">All</option>
+          <option value="books">Books</option>
+          <option value="authors">Authors</option>
+        </select>
+        <input type="text" name="q" class="search-input" placeholder="Search" required>
+        <button type="submit" class="search-button">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
 
-                {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li class="Signup"><a href="{% url 'signup' %}">Sign Up</a></li>
-                {% endif %}
-                </ul>
-            </div>
-        </div>
+      <!-- User Nav -->
+      <ul class="user-nav">
+        {% if user.is_authenticated %}
+          {% if request.session.is_admin %}
+            <li id="add-book-btn">
+              <a href="{% url 'addnewbook' %}" class="add-new-book-btn" title="Add New Book">
+                <i class="fa-solid fa-plus"></i>
+                <span class="add-new-book-text">Add</span>
+              </a>
+            </li>
+          {% endif %}
 
-        <!-- Navigation -->
-        <nav>
-            <div class="container">
-                <ul>
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'index' %}#Bestselling-books-id">View Books</a></li>
-                    {% if request.session.is_admin %}
-                        <li><a href="{% url 'my_books' %}">User's Books</a></li>
-                    {% else %}
-                        <li><a href="{% url 'my_books' %}">My Books</a></li>
-                    {% endif %}
+          <li class="logout-link" id="logout-btn">
+            <a href="{% url 'logout' %}" onclick="return confirm('Are you sure you want to log out?');">Logout</a>
+          </li>
 
+          <li id="acount">
+            <a href="{% url 'user_profile' %}">
+              {% if user.profile.image %}
+                <img src="{{ user.profile.image.url }}" alt="Profile" class="user-avatar">
+              {% else %}
+                <i class="fas fa-user-circle user-icon-placeholder"></i>
+              {% endif %}
+            </a>
+          </li>
 
-                    <li>
-                        <div class="browse-dropdown">
-                            <button class="browse-button">Browse <i class="fa-solid fa-angle-down"></i></button>
-                            <ul class="browse-menu">
-                                {% for cat in categories_with_books %}
-                                    <li><a href="{% url 'borrowbook' %}#category-{{ cat.id }}">{{ cat.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <script src="{% static 'js/header.js' %}"></script>
+        {% else %}
+          <li><a href="{% url 'login' %}">Login</a></li>
+          <li class="Signup"><a href="{% url 'signup' %}">Sign Up</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="container">
+      <ul>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'index' %}#Bestselling-books-id">View Books</a></li>
+        {% if request.session.is_admin %}
+          <li><a href="{% url 'my_books' %}">User's Books</a></li>
+        {% else %}
+          <li><a href="{% url 'my_books' %}">My Books</a></li>
+        {% endif %}
+        <li>
+          <div class="browse-dropdown">
+            <button class="browse-button">Browse <i class="fa-solid fa-angle-down"></i></button>
+            <ul class="browse-menu">
+              {% for cat in categories_with_books %}
+                <li><a href="{% url 'borrowbook' %}#category-{{ cat.id }}">{{ cat.name }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<script src="{% static 'js/header.js' %}"></script>
 </body>
 </html>

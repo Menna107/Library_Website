@@ -259,11 +259,11 @@ def profile_update(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return redirect('user_profile')  
+            messages.success(request, "Profile updated successfully.")
+            return redirect('user_profile')
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.profile)
@@ -271,4 +271,18 @@ def profile_update(request):
     return render(request, 'edit_profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'profile': request.user.profile
     })
+
+
+
+
+
+@login_required
+def delete_account(request):
+    user = request.user
+    logout(request)  
+    user.delete()
+    messages.success(request, "Your account has been deleted successfully.")
+    return redirect('index')  
+
